@@ -1,0 +1,26 @@
+.logo{
+    width: 100px;
+    height: 61px;
+    margin-top: -21px;
+}
+body{
+    background:palevioletred;
+}
+.main{
+    width: 1084px;
+    /*background: #fff;*/
+    margin: 0 auto;
+    background-image: url("../img/yiqi.jpg");
+    /*background-repeat: no-repeat;*/
+    background-size: contain;
+    overflow: hidden;
+
+
+}
+.form-con{
+    width: 50%;
+}
+.opacity{
+    background: rgba(0, 0, 0, .7);
+    padding: 10px ;
+}

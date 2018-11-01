@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%block title%}详情{%endblock%}
+{% block main%}
+<div style="color:white;text-align: center">
+    <h3 style="margin:0 auto">{{question.title}}</h3>
+<p>
+    <span>作者：{{question.author.username}}</span>
+    <span>时间：{{question.ccreate_timr}}</span>
+</p>
+<hr>
+<p>{{question.content}}</p>
+<hr>
+</div>
+
+{% endblock %}

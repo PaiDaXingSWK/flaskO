@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}首页{% endblock %}
+
+<link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+{% block main %}
+<ul style="list-style: none">
+    {%for question in questions%}
+
+    <li style="border-bottom: 1px solid #eee; margin-top: 20px; margin-bottom: 20px;">
+        <div class="img" style="float: left;margin-left: -36px;margin-right: 20px">
+            <img src="{{url_for('static',filename='img/head.jpeg')}}" alt="" class="img-i" style="width: 50px;">
+        </div>
+        <div class="question-group">
+            <p class="question"><a href="{{url_for('detail',question_id=question.id)}}" style="color: #1d3e81;font-weight: 900">{{question.title}}</a></p>
+            <p class="question-content" style="height: 70px;color: white">{{question.content}}</p>
+            <div class="info" style="float: right;font-size: 10px;font-weight: 400;color: white" >
+                <span class="author">{{question.author.username}}</span>
+                <span class="author-time">{{question.ccreate_timr}}</span>
+            </div>
+        </div>
+    </li>
+      {%endfor%}
+</ul>
+{% endblock %}
