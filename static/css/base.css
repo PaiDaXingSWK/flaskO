@@ -8,9 +8,8 @@ body{
 }
 .main{
     width: 1084px;
-    /*background: #fff;*/
+    background: grey;
     margin: 0 auto;
-    background-image: url("../img/yiqi.jpg");
     /*background-repeat: no-repeat;*/
     background-size: contain;
     overflow: hidden;
