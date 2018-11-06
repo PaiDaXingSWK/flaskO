@@ -1,5 +1,5 @@
 # encoding:utf-8
-from flask import Flask,render_template,request,redirect,url_for,session
+from flask import Flask,render_template,request,redirect,url_for,session,flash
 import config
 from sqlalchemy import or_
 from models import User,Question
@@ -43,7 +43,13 @@ def login():
             #return render_template('index.html')
             return redirect(url_for('index'))
         else:
-            return 'error'
+            #flash("标签名称已经存在! ", "error")
+
+            flash(u'账号或密码密码错误，请重新输入','error')
+           # return 'Invalid credentials'
+            return redirect(url_for('login'))
+
+
 
 @app.route('/regist/',methods=['GET','POST'])
 def regist():
