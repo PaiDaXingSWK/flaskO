@@ -100,7 +100,7 @@ def question():
 @app.route('/detail/<question_id>/')
 def detail(question_id):
     question_model=Question.query.filter(Question.id==question_id).first()
-    count=Question.query.filter(Answer.id).count()
+    count=Answer.query.filter(Answer.question_id==question_id).count()
 
     return render_template('detail.html',question=question_model,count=count)
 
@@ -130,7 +130,7 @@ def my_context_processor():
             return {'user':user}
     return {}
 if __name__ == '__main__':
-    app.run(host='192.168.191.1')
+    app.run()
 
 
 
