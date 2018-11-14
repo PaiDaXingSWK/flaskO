@@ -11,12 +11,13 @@
 <p>{{question.content}}</p>
 <hr>
 
-    <h4 style="float: left">评论(0):</h4>
-    <form action="#" method="post">
+    <h4 style="float: left">评论({{count}}):</h4>
+    <form action="{{url_for('add_answer')}}" method="post">
 
             <div class="for-content" >
                 <div class="form-group">
                     <input type="text" placeholder="请填写评论" name="answer_content" class="form-control">
+                    <input type="text" style="display: none" name="question_id" value="{{ question.id }}">
                 </div>
                 <div class="form-group" >
                      <button class="btn btn-primary" >立即评论</button>
@@ -24,5 +25,14 @@
         </div>
     </form>
 </div>
-
+<ul>
+    {%for answer in question.answers%}
+        <li style="list-style: none;color: white;border-bottom: 1px solid #fff;margin-bottom: 15px;"><div>
+            <img src="{{url_for('static',filename='img/head.jpeg')}}" alt="" style="width: 50px;">
+            <span style="color: grey;">{{answer.author.username}}</span>
+            <span style="margin-left: 15px;float: right;margin-right: 20px;color: grey">{{answer.create_time}}</span>
+            <p style="margin-left: 54px;margin-top: 10px;">{{answer.content}}</p>
+        </div></li>
+    {%endfor%}
+</ul>
 {% endblock %}
