@@ -42,3 +42,11 @@ class Answer(db.Model):
 
     question = db.relationship('Question', backref=db.backref('answers',order_by=id.desc()))
     author = db.relationship('User', backref=db.backref('answers'))
+
+class Book(db.Model):
+    __tablename__='book'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nr = db.Column(db.Text, nullable=False)
+    author_id=db.Column(db.Integer,db.ForeignKey('user.id'))
+    create_time = db.Column(db.DateTime, default=datetime.now)
+    author = db.relationship('User', backref=db.backref('books'))

@@ -2,7 +2,7 @@
 from flask import Flask,render_template,request,redirect,url_for,session,flash
 import config
 from sqlalchemy import or_
-from models import User,Question,Answer
+from models import User,Question,Answer,Book
 from exts import db
 from decorators import login_require
 from functools import wraps
@@ -21,12 +21,23 @@ db.init_app(app)
 #             return redirect(url_for('login'))
 #     return wrapper
 
-@app.route('/')
+@app.route('/index/')
 def index():
-    context={
-        'questions':Question.query.order_by('-ccreate_timr').all()
-    }
-    return render_template('index.html',**context)
+    page = int(request.args.get('page', 1))  # 当前页数
+    per_page = int(request.args.get('per_page', 5))  # 设置每页数量
+    paginate =Question.query.order_by('-ccreate_timr').paginate(page, per_page, error_out=False)
+    questions=paginate.items
+    # context = {
+    #     'questions': Question.query.order_by('-ccreate_timr').all()
+    # }
+    # return render_template('index.html', **context)
+    return render_template('index.html',paginate=paginate,questions=questions)
+
+@app.route('/search/')
+def search():
+    q=request.args.get('q')
+    questions=Question.query.filter(or_(Question.title.contains(q),Question.content.contains(q))).order_by('-ccreate_timr')
+    return render_template('index.html',questions=questions)
 
 @app.route('/login/',methods=['GET','POST'])
 def login():
@@ -76,11 +87,7 @@ def logout():
     session.pop('user_id')
     return redirect(url_for('login'))
 
-@app.route('/search/')
-def search():
-    q=request.args.get('q')
-    questions=Question.query.filter(or_(Question.title.contains(q),Question.content.contains(q))).order_by('-ccreate_timr')
-    return render_template('index.html',questions=questions)
+
 
 @app.route('/question/',methods=['GET','POST'])
 @login_require
@@ -120,6 +127,21 @@ def add_answer():
     db.session.commit()
 
     return redirect(url_for('detail',question_id=question_id))
+
+@app.route('/add_book/',methods=['GET','POST'])
+@login_require
+def add_book():
+    if request.method=='GET':
+        return render_template('book.html')
+    else:
+        nr = request.form.get('nr')
+        book=Book(nr=nr)
+        author_id = session['user_id']
+        authord = User.query.filter(User.id == author_id).first()
+        book.author=authord
+        db.session.add(book)
+        db.session.commit()
+        return redirect(url_for('add_book',author_id=author_id))
 
 @app.context_processor
 def my_context_processor():

@@ -4,7 +4,7 @@ from flask_script import Manager
 from flask_migrate import  Migrate,MigrateCommand
 from exts import db
 from zlkt import app
-from models import User,Question,Answer
+from models import User,Question,Answer,Book
 
 manager = Manager(app)
 #使用Migrate绑定app和db
