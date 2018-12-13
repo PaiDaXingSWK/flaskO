@@ -36,8 +36,11 @@ def index():
 @app.route('/search/')
 def search():
     q=request.args.get('q')
-    questions=Question.query.filter(or_(Question.title.contains(q),Question.content.contains(q))).order_by('-ccreate_timr')
-    return render_template('index.html',questions=questions)
+    page = int(request.args.get('page', 1))  # 当前页数
+    per_page = int(request.args.get('per_page', 5))  # 设置每页数量
+    paginate =Question.query.filter(or_(Question.title.contains(q),Question.content.contains(q))).order_by('-ccreate_timr').paginate(page,per_page,False)
+    questions=paginate.items
+    return render_template('search.html',questions=questions,paginate=paginate,q=q)
 
 @app.route('/login/',methods=['GET','POST'])
 def login():
