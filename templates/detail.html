@@ -26,7 +26,7 @@
     </form>
 </div>
 <ul>
-    {%for answer in question.answers%}
+    {%for answer in aa%}
         <li style="list-style: none;color: white;border-bottom: 1px solid #fff;margin-bottom: 15px;"><div>
             <img src="{{url_for('static',filename='img/head.jpeg')}}" alt="" style="width: 50px;">
             <span style="color: grey;">{{answer.author.username}}</span>
@@ -34,5 +34,24 @@
             <p style="margin-left: 54px;margin-top: 10px;">{{answer.content}}</p>
         </div></li>
     {%endfor%}
+    总页数：{{paginate.pages}}
+
+    统计数据数量：{{paginate.total}}
+
+    当前页数：{{paginate.page}}
+
+    {% if paginate.has_prev %} # 如果有上一页
+        <a href="/detail/{{q}}/?page={{ paginate.prev_num }}" >上一页</a>
+    {% endif %}
+    {% if paginate.has_next %}
+        <a href="/detail/{{q}}/?page={{ paginate.next_num }}">下一页</a>
+    {% endif %}
+
+    页码：
+    {% for i in paginate.iter_pages() %}
+        <!--<a href="{{url_for('search',page=1)}}">{{ i }}</a>-->
+        <a href="/detail/{{q}}/?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+
 </ul>
 {% endblock %}

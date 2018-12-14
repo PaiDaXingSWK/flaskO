@@ -109,10 +109,13 @@ def question():
         return redirect(url_for('index'))
 @app.route('/detail/<question_id>/')
 def detail(question_id):
+    page = int(request.args.get('page', 1))  # 当前页数
+    per_page = int(request.args.get('per_page', 5))  # 设置每页数量
     question_model=Question.query.filter(Question.id==question_id).first()
     count=Answer.query.filter(Answer.question_id==question_id).count()
-
-    return render_template('detail.html',question=question_model,count=count)
+    paginate=Answer.query.filter(Answer.question_id==question_id).order_by(Answer.create_time.desc()).paginate(page, per_page, error_out=False)
+    aa=paginate.items
+    return render_template('detail.html',paginate=paginate,question=question_model,count=count,aa=aa,q=question_id)
 
 @app.route('/add_answer/',methods=['POST'])
 @login_require
