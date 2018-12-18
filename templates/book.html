@@ -18,6 +18,8 @@
             <img src="{{url_for('static',filename='img/head.jpeg')}}" alt="" style="width: 50px;">
             <span style="color: grey;">{{bb.author.username}}</span>
             <p style="margin-left: 54px;margin-top: 10px;">{{bb.nr}}</p>
+            <!--<button style="background:black;margin-top: -30px;float: right;">删除</button>-->
+            <a href="{{url_for('del_book',del_id=bb.id)}}" style="color: #1d3e81;font-weight: 900;background: #000;color: #fff;float: right;margin-top: -30px;padding: 3px 5px">删除</a>
         </div></li>
     {%endfor%}
 </ul>

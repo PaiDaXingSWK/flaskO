@@ -134,6 +134,14 @@ def add_answer():
 
     return redirect(url_for('detail',question_id=question_id))
 
+@app.route('/del_book/<del_id>/')
+def del_book(del_id):
+        print del_id
+        book = Book.query.filter(Book.id == del_id).first()
+        db.session.delete(book)
+        db.session.commit()
+        return render_template('book.html')
+
 @app.route('/add_book/',methods=['GET','POST'])
 @login_require
 def add_book():
